@@ -1,0 +1,481 @@
+:root {
+    /* Cores do Modo Claro (Default) */
+    --bg-color: #F8F9FA; /* Fundo principal da página, muito claro */
+    --container-bg: #FFFFFF; /* Fundo do container do chatbot, branco puro */
+    --text-main: #2D3748; /* Cor principal do texto, um cinza escuro */
+    --text-secondary: #718096; /* Cor secundária para descrições, um cinza médio */
+    --accent-color: #4C6EF5; /* Azul primário para destaque, botões e mensagens do usuário */
+    --user-input-bg: #F0F2F5; /* Fundo do campo de input, um cinza bem claro */
+    --border-color: #E2E8F0; /* Cor da borda, um cinza claro */
+    --button-hover-bg: #365DCC; /* Hover para botões primários */
+    --link-color: #4C6EF5; /* Cor de links */
+    --link-hover-color: #365DCC; /* Hover para links */
+    --whatsapp-color: #25D366; /* Verde WhatsApp */
+    --whatsapp-hover-color: #128C7E; /* Hover para WhatsApp */
+    --typing-color: #A0AEC0; /* Cor do indicador de digitação, um cinza azulado */
+    --success-color: #38A169; /* Verde de sucesso */
+    --card-shadow: rgba(0, 0, 0, 0.08); /* Sombra suave para cards */
+    --header-shadow: rgba(0, 0, 0, 0.05); /* Sombra suave para o cabeçalho */
+    --message-bot-bg: #F0F2F5; /* Fundo da mensagem do bot, um cinza muito claro */
+    --message-bot-border: #D1D8E0; /* Borda sutil para mensagem do bot */
+}
+
+/* Modo Escuro */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1A202C; /* Fundo principal mais escuro */
+        --container-bg: #2D3748; /* Fundo do container do chatbot no modo escuro */
+        --text-main: #F7FAFC; /* Texto principal claro */
+        --text-secondary: #CBD5E0; /* Texto secundário mais claro */
+        --accent-color: #5F9DF7; /* Azul de destaque adaptado para o escuro */
+        --user-input-bg: #4A5568; /* Fundo do input mais escuro */
+        --border-color: #4A5568; /* Bordas mais escuras */
+        --button-hover-bg: #4C82F7; /* Hover de botões no escuro */
+        --link-color: #5F9DF7; /* Links no escuro */
+        --link-hover-color: #4C82F7; /* Hover de links no escuro */
+        --typing-color: #718096; /* Indicador de digitação no escuro */
+        --card-shadow: rgba(255, 255, 255, 0.08); /* Sombra para cards no escuro */
+        --header-shadow: rgba(255, 255, 255, 0.05); /* Sombra para o cabeçalho no escuro */
+        --message-bot-bg: #3A4557; /* Fundo da mensagem do bot no escuro */
+        --message-bot-border: #4A5568; /* Borda sutil para mensagem do bot no escuro */
+    }
+}
+
+/* Reset Básico e Tipografia */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+    overflow-x: hidden;
+    height: 100%; /* Garante que body e html ocupem 100% da altura para o flexbox */
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+    padding: 20px;
+    color: var(--text-main); /* Cor principal do texto do corpo */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave para o modo escuro */
+}
+
+/* Contêiner do Chatbot */
+.chatbot-container {
+    width: 100%;
+    max-width: 500px;
+    height: 650px;
+    background-color: var(--container-bg);
+    border-radius: 12px; /* Cantos suaves e modernos */
+    box-shadow: 0 4px 20px var(--card-shadow); /* Sombra elegante */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--border-color); /* Borda fina e discreta */
+    transition: all 0.3s ease;
+}
+
+@media (max-height: 700px) {
+    .chatbot-container {
+        height: 90vh; /* Ajuste para telas menores */
+    }
+}
+
+/* Cabeçalho do Chatbot */
+.chatbot-header {
+    background-color: var(--container-bg); /* Fundo do cabeçalho igual ao container */
+    color: var(--text-main);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 2px solid var(--accent-color); /* Linha de destaque */
+    box-shadow: 0 2px 5px var(--header-shadow); /* Sombra suave */
+    position: relative;
+    z-index: 1; /* Garante que a sombra fique acima das mensagens */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.chatbot-avatar {
+    width: 44px; /* Avatar um pouco maior */
+    height: 44px;
+    background-color: var(--accent-color); /* Fundo do avatar com a cor de destaque */
+    border-radius: 50%; /* Formato circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Texto branco no avatar */
+    font-size: 20px;
+    font-weight: 700; /* Negrito */
+    flex-shrink: 0; /* Impede que encolha */
+    box-shadow: 0 2px 8px rgba(76, 110, 245, 0.3); /* Sombra suave para o avatar */
+}
+
+.chatbot-info h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+.chatbot-info p {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* Área de Mensagens */
+.chatbot-messages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Espaçamento entre as mensagens */
+    background-color: var(--container-bg);
+    transition: background-color 0.3s ease;
+}
+
+.message {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 12px; /* Cantos arredondados */
+    font-size: 14px;
+    line-height: 1.5;
+    animation: fadeIn 0.3s ease forwards; /* Animação de entrada suave */
+    opacity: 0;
+    position: relative;
+    color: var(--text-main); /* Cor de texto padrão */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); /* Sombra sutil para cada mensagem */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.bot-message {
+    background-color: var(--message-bot-bg); /* Fundo cinza muito claro */
+    color: var(--text-main);
+    align-self: flex-start;
+    border-top-left-radius: 4px; /* Detalhe na borda superior esquerda */
+    border-left: 3px solid var(--accent-color); /* Linha de destaque na lateral */
+    transition: background-color 0.3s ease, border-left-color 0.3s ease;
+}
+
+.user-message {
+    background-color: var(--accent-color); /* Fundo azul de destaque */
+    color: white; /* Texto branco */
+    align-self: flex-end;
+    border-top-right-radius: 4px; /* Detalhe na borda superior direita */
+    border-right: 3px solid var(--accent-color); /* Linha de destaque na lateral */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-right-color 0.3s ease;
+}
+
+/* Opções de Botões (Quick Replies) */
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; /* Espaçamento entre as opções */
+    margin-top: 12px;
+}
+
+.option-btn {
+    background-color: rgba(76, 110, 245, 0.1); /* Azul claro transparente */
+    color: var(--accent-color);
+    border: none;
+    padding: 10px 18px; /* Padding ajustado */
+    border-radius: 25px; /* Botões arredondados (pílula) */
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    flex-grow: 1; /* Permite que os botões cresçam */
+    text-align: center;
+    max-width: fit-content; /* Se ajusta ao conteúdo */
+}
+
+.option-btn:hover {
+    background-color: rgba(76, 110, 245, 0.2);
+    transform: translateY(-2px); /* Efeito de levantar */
+    box-shadow: 0 4px 10px rgba(76, 110, 245, 0.15); /* Sombra no hover */
+}
+
+/* Input e Botão de Envio */
+.chatbot-input {
+    display: flex;
+    align-items: center; /* Alinha verticalmente */
+    padding: 16px;
+    border-top: 1px solid var(--border-color);
+    background-color: var(--container-bg);
+    transition: background-color 0.3s ease, border-top-color 0.3s ease;
+}
+
+.chatbot-input input {
+    flex: 1;
+    padding: 12px 18px;
+    background-color: var(--user-input-bg); /* Fundo do input */
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    border-radius: 25px; /* Input arredondado */
+    outline: none; /* Remove o outline padrão */
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.chatbot-input input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.2); /* Foco suave azul */
+}
+
+.chatbot-input button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%; /* Botão circular */
+    margin-left: 10px; /* Espaçamento do input */
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(76, 110, 245, 0.3); /* Sombra para o botão */
+    flex-shrink: 0; /* Impede que o botão encolha */
+}
+
+.chatbot-input button i {
+    font-size: 20px; /* Tamanho do ícone */
+}
+
+.chatbot-input button:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-1px); /* Efeito de levantar */
+    box-shadow: 0 4px 12px rgba(76, 110, 245, 0.4); /* Sombra mais pronunciada no hover */
+}
+
+/* Indicador de Digitação */
+.typing-indicator {
+    display: flex;
+    padding: 12px 18px;
+    background-color: var(--message-bot-bg); /* Fundo similar à mensagem do bot */
+    border-radius: 12px;
+    align-self: flex-start;
+    margin-bottom: 8px;
+    width: fit-content;
+    gap: 6px; /* Espaçamento entre os pontos */
+    border-left: 3px solid var(--typing-color); /* Linha de destaque para o indicador */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-left-color 0.3s ease;
+}
+
+.typing-indicator span {
+    height: 9px; /* Tamanho dos pontos */
+    width: 9px;
+    background-color: var(--typing-color);
+    border-radius: 50%;
+    display: inline-block;
+    animation: typing 1s infinite ease-in-out;
+    opacity: 0.7; /* Opacidade inicial */
+}
+
+@keyframes typing {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: 0s; }
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+/* Botões de Ação Dinâmicos (criados via JS) */
+.action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px; /* Para aparecer abaixo de uma mensagem */
+    padding: 10px 20px;
+    background-color: var(--user-input-bg); /* Fundo claro */
+    color: var(--accent-color);
+    border-radius: 25px; /* Estilo pílula */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    border: 1px solid var(--border-color); /* Borda sutil */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra discreta */
+}
+
+.action-button:hover {
+    background-color: rgba(76, 110, 245, 0.1); /* Fundo azul mais evidente no hover */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(76, 110, 245, 0.15);
+}
+
+/* Variações de cor para Action Buttons */
+.action-button.primary {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.action-button.primary:hover {
+    background-color: var(--button-hover-bg);
+    border-color: var(--button-hover-bg);
+}
+
+.action-button.success {
+    background-color: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.action-button.success:hover {
+    background-color: #2F855A; /* Um verde um pouco mais escuro */
+    border-color: #2F855A;
+}
+
+/* Overrides específicos para o WhatsApp, garantindo cor forte */
+.action-button.whatsapp {
+    background-color: var(--whatsapp-color) !important;
+    color: white !important;
+    border: none !important; /* Remove qualquer borda */
+    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.action-button.whatsapp:hover {
+    background-color: var(--whatsapp-hover-color) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
+/* Cartões de Mensagem (para exibir detalhes de serviços, etc.) */
+.message-card {
+    background-color: var(--container-bg); /* Fundo do card */
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 8px; /* Espaço da mensagem anterior */
+    align-self: flex-start; /* Alinha à esquerda como mensagem do bot */
+    max-width: 85%;
+    box-shadow: 0 2px 10px var(--card-shadow);
+    animation: fadeIn 0.3s ease forwards;
+    opacity: 0;
+    color: var(--text-main);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.card-image {
+    width: 100%;
+    height: 140px; /* Altura um pouco maior para imagens de portfólio */
+    object-fit: cover; /* Garante que a imagem cubra a área */
+    display: block;
+}
+
+.card-content {
+    padding: 16px; /* Padding interno do conteúdo */
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.card-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.card-content p strong {
+    color: var(--accent-color); /* Destaca informações importantes como investimento */
+}
+
+/* Barra de Rolagem Personalizada */
+.chatbot-messages::-webkit-scrollbar {
+    width: 8px; /* Largura da barra */
+}
+
+.chatbot-messages::-webkit-scrollbar-track {
+    background: var(--bg-color); /* Fundo da barra */
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color); /* Cor do "polegar" */
+    border-radius: 4px;
+    border: 2px solid var(--container-bg); /* Borda para contraste com o fundo */
+}
+/* Firefox scrollbar (experimental) */
+.chatbot-messages {
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) var(--bg-color);
+}
+
+/* Responsividade Geral */
+@media (max-width: 480px) {
+    body {
+        padding: 0; /* Remove padding nas bordas da tela em mobile */
+    }
+
+    .chatbot-container {
+        height: 100vh; /* Ocupa a tela inteira */
+        max-width: 100%; /* Ocupa a largura inteira */
+        border-radius: 0; /* Sem bordas arredondadas para tela cheia */
+        box-shadow: none; /* Remove sombra para tela cheia */
+        border: none; /* Remove borda para tela cheia */
+    }
+    
+    .chatbot-messages {
+        padding: 15px; /* Ajusta padding para mobile */
+        gap: 12px; /* Ajusta espaçamento das mensagens */
+    }
+
+    .message {
+        max-width: 90%; /* Mensagens um pouco mais largas */
+        padding: 10px 14px;
+    }
+
+    .chatbot-header {
+        padding: 14px 18px; /* Ajusta padding do cabeçalho */
+    }
+
+    .chatbot-input {
+        padding: 12px; /* Ajusta padding do input */
+    }
+
+    .chatbot-input input {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .chatbot-input button {
+        width: 44px;
+        height: 44px;
+    }
+
+    .action-button, .option-btn {
+        padding: 9px 15px;
+        font-size: 13px;
+    }
+
+    .typing-indicator {
+        padding: 10px 14px;
+    }
+
+}
